@@ -9,6 +9,7 @@
 \usepackage{tikz}
 \usepackage{amsthm}
 \usepackage{natbib}
+\renewcommand{\bibsection}{}
 \usetikzlibrary{arrows}
 \usepackage{verbatim}
 \usepackage[margin=2cm]{geometry}
@@ -19,8 +20,9 @@
 \maketitle
 \section*{Abstract}
 Our goal for this project was to develop a procedure by which third-year undergraduate students could
-build, test, and experiment with a magneto-optical trap (MOT). We successfully constructed a MOT and
-demonstrated its effectiveness, though our setup required the use of expensive and fiddly fibre optic couples.
+build, test, and experiment with a magneto-optical trap (MOT) for rubidium-85 atoms. Our setup used an external-cavity diode laser (ECDL)
+split into three arms with retro-reflection, and an additional ECDL used as a repumping beam.
+We successfully constructed a MOT and demonstrated its effectiveness, though our setup required the use of expensive and fiddly fibre optic couples.
 These were chosen for flexibility; an implementation of the experiment would need only minor modifications
 to avoid using these.
 
@@ -39,21 +41,48 @@ Thanks also to Alexander Wood for his tireless assistance in the lab.
 \vfill
 \pagebreak
 \section{Introduction}
-Optical trapping methodologies have their origin in the 1970s, when~\cite{ashkin} developed what has become known
-as optical tweezers using electromagnetic gradients.
+Optical trapping methodologies have their origin in the 1970s, when~\cite{ashkin1970} developed what has become known
+as optical tweezers using electromagnetic gradients. Following this was a flurry of research, on both refining this method
+as well as entirely novel approaches to creating optical traps. Laser cooling -- one of the techniques used in MOTs -- was
+first demonstrated by~\cite{wineland1978}, who were able to cool Mg (II) ions to temperatures below 40 K. This method was improved
+upon by~\cite{chu1985}, cooling atoms to \(\sim240 \operatorname{\mu}\)K with ``optical molasses'', using a laser slightly detuned from resonance.
+Atoms moving towards the laser see a Doppler-shifted beam closer to resonance, and therefore are more likely to interact with the beam.
+\\\\
+Magneto-optical traps take laser-cooled atoms, and apply a magnetic quadrupole to take advantage of the Zeeman effect. By
+introducing a radially-increasing field, the magnetically-sensitive energy levels are shifted closer to the laser's resonance as the atom moves
+from the trap's centre. By this mechanism, explored in further detail in Section 2, atoms are trapped in the centre of the
+apparatus. The first such trap was constructed by~\cite{raab1987}, who were able to confine and cool a cloud of neutral sodium atoms. For this and related
+work, the 1997 Nobel Prize in Physics was awarded to several of the relevant researchers.
+\\\\
+Alkali metals are the preferred atoms of choice for magneto-optical trapping due to their hydrogenic atomic structure; they can be approximated
+as a simple two-level atom. Rubidium atoms in particular are popular due to their relatively high mass, and the fact that their transition frequencies
+are in the range of cheap and readily available diode lasers at approximately 780nm.
+\\\\
+To achieve the precision required for laser cooling, we used saturated absorption spectroscopy. Since atoms in a vapour cell have a distribution of velocities,
+incident light will be Doppler shifted differently for various atoms in the sample. This limits the precision of absorption measurements not by the fundamental width
+of the transition, but instead by this Doppler broadening effect. To overcome this issue, a retro-reflected laser (called the probe beam) is recorded instead. By saturating the sample,
+this probe beam causes stimulated emission from excited atoms, resulting in sharp dips in the Doppler-broadened peaks at the resonant frequencies. In this way, the hyperfine splitting of rubidium-85 in the
+\(5S_{3/2}\) state can be revealed. By parking the lasers in the vicinity of the appropriate transitions and fine-tuning the frequency, we were able to demonstrate our MOT.\@
+\vfill
 \section{Background theory}
 \subsection{Hyperfine structure of rubidium-85}
 \subsection{Non-allowed and dark transitions}
 \subsection{Saturated absorption spectroscopy}
 \subsection{Doppler cooling}
 \subsection{The Zeeman effect}
+\subsection{Combined effects forming a MOT}
 \subsection{Repumping}
 \section{Experimental procedure}
+\subsection{External-cavity diode lasers}
 \subsection{Absorption spectroscopy}
 \subsection{Saturated absorption spectroscopy}
 \subsection{Vacuum cell setup}
-\subsection{Rubidium sources and magnetic coils}
+\subsection{Magnetic quadrupole}
+\subsection{Arrangement for optical molasses}
+\subsection{Fine-tuning to create the trap}
 \section{Results and discussion}
+\vfill
+\pagebreak
 \section{References}
 \bibliography{papers}
 \bibliographystyle{apa}
