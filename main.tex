@@ -4,6 +4,7 @@
 \usepackage{amsfonts}		
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{url}
 \usepackage{mathrsfs}
 \usepackage{multicol}
 \usepackage{tikz}
@@ -61,11 +62,24 @@ are in the range of cheap and readily available diode lasers at approximately 78
 To achieve the precision required for laser cooling, we used saturated absorption spectroscopy. Since atoms in a vapour cell have a distribution of velocities,
 incident light will be Doppler shifted differently for various atoms in the sample. This limits the precision of absorption measurements not by the fundamental width
 of the transition, but instead by this Doppler broadening effect. To overcome this issue, a retro-reflected laser (called the probe beam) is recorded instead. By saturating the sample,
-this probe beam causes stimulated emission from excited atoms, resulting in sharp dips in the Doppler-broadened peaks at the resonant frequencies. In this way, the hyperfine splitting of rubidium-85 in the
-\(5S_{3/2}\) state can be revealed. By parking the lasers in the vicinity of the appropriate transitions and fine-tuning the frequency, we were able to demonstrate our MOT.\@
+the probe beam will interact with far fewer atoms when it is on resonance with the hyperfine transitions, resulting in sharp dips in the Doppler-broadened peaks at the resonant frequencies.
+In this way, the hyperfine splitting of rubidium-85 in the \(5S_{3/2}\) state can be revealed. By setting the lasers in the vicinity of the appropriate transitions and fine-tuning the frequency,
+we were able to demonstrate our MOT.\@
 \vfill
+\pagebreak
 \section{Background theory}
 \subsection{Hyperfine structure of rubidium-85}
+The simplest atom, hydrogen, can be modelled as a solitary electric monopole -- the nucleus -- with an electron orbiting according to quantum or classical electrodynamics as required\footnote{That is to say, hydrogen-1 rather than deuterium or tritium.}. The same
+model is adequate for more complex atoms such as rubidium in some applications; this simple treatment produces discrete energy levels from straightforward quantum mechanics. If we use higher-order expansions
+of the electric and magnetic multipoles, these energy levels break down to reveal finer states~\cite{satspec}. We call this process ``hyperfine splitting''.
+\\\\
+Below is a diagram of the hyperfine structure for rubidium-85, with the useful transitions labelled.
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{images/transitions.png}
+    \end{center}
+    \caption{Diagram of the relevant transitions for rubidium-85~\cite{ust}}
+\end{figure}
 \subsection{Non-allowed and dark transitions}
 \subsection{Saturated absorption spectroscopy}
 \subsection{Doppler cooling}
@@ -85,5 +99,5 @@ this probe beam causes stimulated emission from excited atoms, resulting in shar
 \pagebreak
 \section{References}
 \bibliography{papers}
-\bibliographystyle{apa}
+\bibliographystyle{unsrt}
 \end{document}
