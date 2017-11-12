@@ -12,6 +12,7 @@
 \usepackage{natbib}
 \renewcommand{\bibsection}{}
 \usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
 \usepackage{verbatim}
 \usepackage[margin=2cm]{geometry}
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
@@ -56,7 +57,7 @@ apparatus. The first such trap was constructed by~\cite{raab1987}, who were able
 work, the 1997 Nobel Prize in Physics was awarded to several of the relevant researchers.
 \\\\
 Alkali metals are the preferred atoms of choice for magneto-optical trapping due to their hydrogenic atomic structure; they can be approximated
-as a simple two-state atom. Rubidium atoms in particular are popular due to their relatively high mass, and the fact that their transition frequencies
+as a simple two-state atom. Rubidium atoms in particular are popular due to their convenient atomic structure, and the fact that their transition frequencies
 are in the range of cheap and readily available diode lasers at approximately 780nm.
 \\\\
 To achieve the precision required for laser cooling, we used saturated absorption spectroscopy. Since atoms in a vapour cell have a distribution of velocities,
@@ -80,7 +81,7 @@ Let's generalise this model to a gas of these atoms at temperature \(T\). If we 
 \begin{equation}
     f(v) = \sqrt{\frac{m}{2\pi k_B T}}\exp\left(\frac{-mv^2}{2k_B T}\right)
 \end{equation}
-Place a source beam of photons of frequency \(f_s\) incident on the atoms, travelling in direction \(+\vec{\hat{x}}\). Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency (CITE THIS)
+Place a source beam of photons of frequency \(f_s\) incident on the atoms, travelling in direction \(+\vec{\hat{x}}\). Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency
 \begin{equation}
     f_o =  f_s\sqrt{\frac{1-\frac{v}{c}}{1+\frac{v}{c}}}
 \end{equation}
@@ -98,6 +99,8 @@ so that \(v<0\). Therefore, only those atoms moving towards the beam will be exc
 \end{equation}
 and thus a net slowing of the atom. If we repeat this process for all six directions \(\pm\vec{\hat{x}},\pm\vec{\hat{y}},\pm\vec{\hat{z}}\), the end result is a decrease in velocity in all directions, and therefore
 a decrease in temperature of the gas. Note that it is vital that the emission of the photons is isotropic, to ensure a slow-down in \textit{all} directions.
+
+This setup is commonly called ``optical molasses''.
 \subsubsection{The Doppler limit}
 Since spontaneous emission is isotropic, the average of the changes in velocity caused by emitted photons is zero. However, the mean squared velocity is \textit{not} zero; this supplies heat to the atoms at a constant rate.
 As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas.
@@ -128,10 +131,14 @@ The cooling laser cannot excite an atom in this state, so we call it a ``dark st
 Absorption spectroscopy is theoretically straightforward. Given a gas of atoms with a transition of frequency \(f\), a laser scanning through a range of frequencies between \(f\pm\Delta f\) for some \(0<\Delta f<f\) will excite atoms when it is in the vicinity of \(f\). This causes a
 reduction in the measured intensity of the beam \(I\). Plotting \(I\) as a function of \(f\) reveals all transitions of the atom in the scanned range.
 
-Unfortunately, since the atoms in the gas are undergoing random thermal motion, a wider range of frequencies will be absorbed by the atoms. This tends to obscure more subtle features of absorption spectra, such as hyperfine splitting in a process known as Doppler broadening. To overcome this, two antiparallel beams are used; a strong ``pump''
-beam, and a weaker ``probe'' beam. The treatment here follows that of \cite{satspec}.
+Unfortunately, since the atoms in the gas are undergoing random thermal motion, a wider range of frequencies will be absorbed by the atoms. This tends to obscure more subtle features of absorption spectra, such as hyperfine splitting, in a process known as Doppler broadening. To overcome this, two antiparallel beams are used; a strong ``pump''
+beam, and a weaker ``probe'' beam. The treatment here follows that of~\cite{satspec}.
 \begin{figure}[h]
     \centering
+    \begin{tikzpicture}
+        \draw (0,0) .. controls (1,0) and (2,-2) .. (3,-4);
+        \draw (3,-4) .. controls (4,-1) and (5,0) .. (7,0);
+    \end{tikzpicture}
     \caption{An example of a Doppler-broadened absorption spectrum.}
 \end{figure}
 
@@ -139,12 +146,41 @@ Consider a gas of atoms with resonant frequency \(f\) and the distribution of ve
 atoms travelling towards \(-\vec{\hat{x}}\), and the probe beam will interact only with atoms travelling towards \(\vec{\hat{x}}\), and vice versa if \(f_s>f\).
 \begin{figure}[h]
     \centering
+    \begin{tikzpicture}[node distance=2cm]
+        \node [draw, circle] (A) {Rb};
+
+        \node [draw, circle, right=of A] (B) {Rb};
+
+        \node [above=0.5cm of A] (AxisArrowStart) {\(\vec{\hat{x}}\)};
+        \node [right=of AxisArrowStart] (AxisArrowEnd) {};
+        \draw [->] (AxisArrowStart)--(AxisArrowEnd);
+
+        \node [label=above:pump beam, left=4cm of A] (LeftLaserStart) {};
+        \node [label=above:probe beam, right=4cm of B] (RightLaserStart) {};
+        \draw [->, color=red, line width=4pt] ([yshift=-0.3cm]LeftLaserStart.center)--([yshift=-0.3cm]A.center);
+        \draw [->, color=red, line width=3pt] ([yshift=-0.3cm]RightLaserStart.center)--([yshift=-0.3cm]B.center);
+        \node [right=1cm of B, label=right:\(\vec{v}\)] (BArrowEnd) {};
+        \node [left=1cm of A, label=left:\(\vec{v}\)] (AArrowEnd) {};
+        \draw [->, line width=1pt] (A)--(AArrowEnd);
+        \draw [->, line width=1pt] (B)--(BArrowEnd);
+    \end{tikzpicture}
     \caption{Behaviour of the system when the probe and pump beams are off resonance.}    
 \end{figure}
 
 If instead \(f_s\approx f\), these two beams will both interact with only those atoms for which their velocity \(\vec{v}\cdot\vec{\hat{x}}\approx 0\). Importantly, both beams are interacting with the same set of atoms. The atoms are considered ``saturated'' if approximately half of them are in the
 excited state at any time. Given this condition, many of the atoms will be in the excited state due to the pump beam, and will therefore not be able to absorb photons from the resonant probe beam. This manifests as a sharp decrease in absorption around the hyperfine transition frequencies of the atoms of interest.
-This phenomenon is known as ``saturated absorption spectroscopy''.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm]
+        \node [draw, circle] (A) {Rb};
+        \node [label=above:pump beam, left=4cm of A] (LeftLaserStart) {};
+        \draw [->, color=red, line width=4pt] (LeftLaserStart)--(A);
+        \node [label=above:probe beam, right=4cm of A, yshift=-0.3cm] (RightLaserStart) {};
+        \node [left=4cm of A, yshift=-0.3cm] (RightLaserEnd) {};
+        \draw [->, color=red, line width=3pt] (RightLaserStart)--(RightLaserEnd);
+    \end{tikzpicture}
+    \caption{Behaviour of the system when the probe and pump beams are on resonance.}
+\end{figure}
 \begin{figure}[h]
     \centering
     \caption{An example of a saturated absorption spectrum.}
@@ -165,8 +201,14 @@ the detuned laser's resonance, and they are therefore more likely to interact wi
     \caption{A sketch of the field lines of a magnetic quadrupole.~\cite{wikiquad}}
 \end{figure}
 
-A subtlety is introduced by the Zeeman-shifted levels' dependence on polarisation. The lower energy level accepts only left-circularly polarised light, and the upper energy level accepts only right-circularly polarised light. The incident beams must therefore be circularly left-polarised (\(\sigma^-\)), since the effect relies on interaction
-with the lower energy level.~\cite{umkc}
+A subtlety is introduced by the Zeeman-shifted levels' dependence on polarisation. The lower energy level accepts only left-circularly polarised light, and the upper energy level accepts only right-circularly polarised light defined relative to the magnetic field. For atoms to be trapped, we need to shift the lower energy
+levels closer to the beam's resonance, but only for those atoms \textit{towards} the beam. Fortunately, on opposite sides of the field, the magnetic field has the opposite sign; therefore, the needed polarisation is reversed, and atoms on the opposite side to the beam are not affected.~\cite{umkc}
+\begin{figure}[h]
+    \centering
+    \caption{Sign convention for Zeeman-shifted levels' polarisation.}
+\end{figure}
+\vfill
+\pagebreak
 \section{Experimental procedure}
 \subsection{External-cavity diode lasers}
 \subsection{Absorption spectroscopy}
