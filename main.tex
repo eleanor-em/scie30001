@@ -28,9 +28,9 @@ These were chosen for flexibility; an implementation of the experiment would nee
 to avoid using these.
 
 This document is intended to be both a reflection of our experiences and a guide for a prospective
-third year laboratory experiment. I will first outline some of the arelevant theory for the experiment,
+third year laboratory experiment. I will first outline some of the relevant theory for the experiment,
 then discuss the experimental procedures required to build the MOT;\@ I will conclude the document with a brief
-discussion of our results.
+discussion of our results, followed by an outline of ways to extend the experiment.
 
 \begin{center}    
 \subsection*{Supervised by Andy McCulloch and Robert Scholten}
@@ -56,36 +56,117 @@ apparatus. The first such trap was constructed by~\cite{raab1987}, who were able
 work, the 1997 Nobel Prize in Physics was awarded to several of the relevant researchers.
 \\\\
 Alkali metals are the preferred atoms of choice for magneto-optical trapping due to their hydrogenic atomic structure; they can be approximated
-as a simple two-level atom. Rubidium atoms in particular are popular due to their relatively high mass, and the fact that their transition frequencies
+as a simple two-state atom. Rubidium atoms in particular are popular due to their relatively high mass, and the fact that their transition frequencies
 are in the range of cheap and readily available diode lasers at approximately 780nm.
 \\\\
 To achieve the precision required for laser cooling, we used saturated absorption spectroscopy. Since atoms in a vapour cell have a distribution of velocities,
 incident light will be Doppler shifted differently for various atoms in the sample. This limits the precision of absorption measurements not by the fundamental width
 of the transition, but instead by this Doppler broadening effect. To overcome this issue, a retro-reflected laser (called the probe beam) is recorded instead. By saturating the sample,
 the probe beam will interact with far fewer atoms when it is on resonance with the hyperfine transitions, resulting in sharp dips in the Doppler-broadened peaks at the resonant frequencies.
-In this way, the hyperfine splitting of rubidium-85 in the \(5S_{3/2}\) state can be revealed. By setting the lasers in the vicinity of the appropriate transitions and fine-tuning the frequency,
+In this way, the hyperfine splitting of rubidium-85 in the \(5P_{3/2}\) state can be revealed. By setting the lasers in the vicinity of the appropriate transitions and fine-tuning the frequency,
 we were able to demonstrate our MOT.\@
 \vfill
 \pagebreak
 \section{Background theory}
+\subsection{Doppler cooling}
+On a macroscopic scale, the most familiar reaction to a laser pointed at a material is for the material to heat up due to the energy transferred from the photons to the material. On a microscopic scale,
+however, the interaction is subtler, and this can lead to wildly different behaviour. Doppler cooling is one such example.
+
+Consider a simple two-state atom of mass \(m\), with a transition from a ground state to an excited state at frequency \(f\). Take a photon with momentum \(p=\frac{hf}{c}\) in direction \(\vec{\hat{v}}\), where \(h\) is Planck's constant, and \(c\) is the speed of light.
+If this photon is incident on the atom it can be absorbed to bring the atom to
+its excited state, and thus cause a change in velocity \(\Delta v=\frac{p}{m}=\frac{hf}{mc}\). The photon will then be re-emitted isotropically according to Compton scattering, resulting in a net velocity increase of the atom towards \(\vec{\hat{v}}\).
+
+Let's generalise this model to a gas of these atoms at temperature \(T\). If we project their velocities onto a given direction \(\vec{\hat{x}}\), we will have a Maxwell-Boltzmann distribution. The probability of a given atom having velocity \(v\) in this direction is \cite{muller}
+\begin{equation}
+    f(v) = \sqrt{\frac{m}{2\pi k_B T}}\exp\left(\frac{-mv^2}{2k_B T}\right)
+\end{equation}
+Place a source beam of photons of frequency \(f_s\) incident on the atoms, travelling in direction \(+\vec{\hat{x}}\). Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency (CITE THIS)
+\begin{equation}
+    f_o =  f_s\sqrt{\frac{1-\frac{v}{c}}{1+\frac{v}{c}}}
+\end{equation}
+The atom will absorb photons only if \(f_o\approx f\). Substituting this requirement and solving for \(v\) gives us
+\begin{equation}
+    v\approx c\frac{1-\left(\frac{f}{f_s}\right)^2}{1+\left(\frac{f}{f_s}\right)^2}
+\end{equation}
+If we detune the source beam from resonance so that \(f_s=f-\Delta f\) for some \(0<\Delta f<f\), we have
+\begin{equation}
+    \frac{f}{f_s} = \frac{f}{f-\Delta f} > 1
+\end{equation}
+so that \(v<0\). Therefore, only those atoms moving towards the beam will be excited by the photons, causing a change in velocity
+\begin{equation}
+    \Delta v=\frac{hf_s}{mc}=\frac{h(f-\Delta f)}{mc}>0
+\end{equation}
+and thus a net slowing of the atom. If we repeat this process for all six directions \(\pm\vec{\hat{x}},\pm\vec{\hat{y}},\pm\vec{\hat{z}}\), the end result is a decrease in velocity in all directions, and therefore
+a decrease in temperature of the gas. Note that it is vital that the emission of the photons is isotropic, to ensure a slow-down in \textit{all} directions.
+\subsubsection{The Doppler limit}
+Since spontaneous emission is isotropic, the average of the changes in velocity caused by emitted photons is zero. However, the mean squared velocity is \textit{not} zero; this supplies heat to the atoms at a constant rate.
+As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas.
 \subsection{Hyperfine structure of rubidium-85}
+\subsubsection{Hyperfine splitting}
 The simplest atom, hydrogen, can be modelled as a solitary electric monopole -- the nucleus -- with an electron orbiting according to quantum or classical electrodynamics as required\footnote{That is to say, hydrogen-1 rather than deuterium or tritium.}. The same
 model is adequate for more complex atoms such as rubidium in some applications; this simple treatment produces discrete energy levels from straightforward quantum mechanics. If we use higher-order expansions
-of the electric and magnetic multipoles, these energy levels break down to reveal finer states~\cite{satspec}. We call this process ``hyperfine splitting''.
+of the electric and magnetic multipoles, these energy levels break down to reveal finer states~\cite{satspec}. We call this phenomenom ``hyperfine splitting''.
 \\\\
 Below is a diagram of the hyperfine structure for rubidium-85, with the useful transitions labelled.
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=0.6\textwidth]{images/transitions.png}
-    \end{center}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/transitions.png}
     \caption{Diagram of the relevant transitions for rubidium-85~\cite{ust}}
 \end{figure}
-\subsection{Non-allowed and dark transitions}
+\subsubsection{Closed optical loops, forbidden transitions, and dark states, oh my!}
+We would love to have a simple two-state atom to perform optical cooling on; unfortunately, this is not possible in practice due to hyperfine splitting. The easiest atomic structure to cool is one that has a so-called ``closed optical loop''; that is,
+an excitation-emission event that always returns an atom to its original state, ready to absorb another identical photon. Rubidium-85 has such a transition between the \(5S_{1/2},\,F=3\) state and the \(5P_{3/2},\,F'=4\) state, since every other possible decay is a ``forbidden transition''.
+
+Not every pair of source and destination energy levels forms a valid transition. According to selection rules such as conservation of angular momentum and parity, only a small subset are allowed by quantum mechanics. Take an atom in the excited \(5P_{3/2},\,F'=4\) state.
+It is prevented from decaying to any of the \(5P_{1/2}\) states because the spin would change direction, violating parity~\cite{harandbert}. It also cannot decay to the \(5S_{1/2},\,F=2\) state, since this would require an angular momentum change of -2, and a photon carries
+a spin of 1. Thus, it can \textit{only} decay back to the \(5S_{1/2},\,F=3\) state, forming a closed optical loop.
+
+In practice, lasers must be detuned from resonance to allow for Doppler cooling. This has the unfortunate complication of placing the frequency in an overlap between the \(5P_{3/2},\,F'=4\) and the \(5P_{3/2},\,F'=3\) states, meaning there is a small but nonzero probability that an
+excited atom will arrive at a state that does \textit{not} form a closed optical loop. While an atom in this state still cannot decay to any of the \(5P_{1/2}\) states, it \textit{can} decay to the \(5S_{1/2},\,F=2\) state, since this requires an angular momentum change of only -1.
+The cooling laser cannot excite an atom in this state, so we call it a ``dark state''. This would prevent further cooling of the atom if a repumping laser was not employed at the frequency needed to excite the atom back to the \(5P_{3/2},\,F'=3\) state.
 \subsection{Saturated absorption spectroscopy}
-\subsection{Doppler cooling}
+Absorption spectroscopy is theoretically straightforward. Given a gas of atoms with a transition of frequency \(f\), a laser scanning through a range of frequencies between \(f\pm\Delta f\) for some \(0<\Delta f<f\) will excite atoms when it is in the vicinity of \(f\). This causes a
+reduction in the measured intensity of the beam \(I\). Plotting \(I\) as a function of \(f\) reveals all transitions of the atom in the scanned range.
+
+Unfortunately, since the atoms in the gas are undergoing random thermal motion, a wider range of frequencies will be absorbed by the atoms. This tends to obscure more subtle features of absorption spectra, such as hyperfine splitting in a process known as Doppler broadening. To overcome this, two antiparallel beams are used; a strong ``pump''
+beam, and a weaker ``probe'' beam. The treatment here follows that of \cite{satspec}.
+\begin{figure}[h]
+    \centering
+    \caption{An example of a Doppler-broadened absorption spectrum.}
+\end{figure}
+
+Consider a gas of atoms with resonant frequency \(f\) and the distribution of velocities from Equation 1, with a pump beam travelling towards \(+\vec{\hat{x}}\) and a probe beam travelling towards \(-\vec{\hat{x}}\). If these beams have a frequency \(f_s<f\), the pump beam will interact only with
+atoms travelling towards \(-\vec{\hat{x}}\), and the probe beam will interact only with atoms travelling towards \(\vec{\hat{x}}\), and vice versa if \(f_s>f\).
+\begin{figure}[h]
+    \centering
+    \caption{Behaviour of the system when the probe and pump beams are off resonance.}    
+\end{figure}
+
+If instead \(f_s\approx f\), these two beams will both interact with only those atoms for which their velocity \(\vec{v}\cdot\vec{\hat{x}}\approx 0\). Importantly, both beams are interacting with the same set of atoms. The atoms are considered ``saturated'' if approximately half of them are in the
+excited state at any time. Given this condition, many of the atoms will be in the excited state due to the pump beam, and will therefore not be able to absorb photons from the resonant probe beam. This manifests as a sharp decrease in absorption around the hyperfine transition frequencies of the atoms of interest.
+This phenomenon is known as ``saturated absorption spectroscopy''.
+\begin{figure}[h]
+    \centering
+    \caption{An example of a saturated absorption spectrum.}
+\end{figure}
+\subsubsection{Crossover peaks}
+A wrinkle that shows up in saturated absorption spectroscopy experiments is caused by an effect known as a ``crossover peak''. These tend to be much stronger than the actual hyperfine peaks, and are caused by interactions with atoms travelling at pathological velocities.
+
+Consider an atom travelling at a velocity \(v\) with a gap between two transitions separated by frequency \(\Delta f\), where \(v\) is such that the pump beam Doppler shifted by \(\frac{\Delta f}{2}\). The probe beam will then be Doppler shifted by \(-\frac{\Delta f}{2}\). If the beams are at a frequency exactly halfway
+between the transitons, both the pump and probe beams will be seen as on resonance, even though the frequency does not match any individual transiton. In practice, this means that small adjustments should be made to visible peaks to match the actual resonant frequency.
 \subsection{The Zeeman effect}
+Typical atomic energy levels have degeneracy; there are multiple possible configurations at the same energy level. These vary in the direction of the magnetic moments, so an external magnetic field causes these energy levels to split into three --- a higher energy level, a lower energy level, and the original level.
 \subsection{Combined effects forming a MOT}
-\subsection{Repumping}
+If we use two electromagnetic coils in anti-Helmholtz configuration, their magnetic field forms a magnetic quadrupole field, with a strength directly proportional to distance from their shared centre. Atoms that are further from this centre therefore experience stronger Zeeman splitting; their energy levels move closer to
+the detuned laser's resonance, and they are therefore more likely to interact with the cooling laser. This results in a net restorative force towards the trap's centre.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/quadrupole.png}
+    \caption{A sketch of the field lines of a magnetic quadrupole.~\cite{wikiquad}}
+\end{figure}
+
+A subtlety is introduced by the Zeeman-shifted levels' dependence on polarisation. The lower energy level accepts only left-circularly polarised light, and the upper energy level accepts only right-circularly polarised light. The incident beams must therefore be circularly left-polarised (\(\sigma^-\)), since the effect relies on interaction
+with the lower energy level.~\cite{umkc}
 \section{Experimental procedure}
 \subsection{External-cavity diode lasers}
 \subsection{Absorption spectroscopy}
@@ -95,6 +176,7 @@ Below is a diagram of the hyperfine structure for rubidium-85, with the useful t
 \subsection{Arrangement for optical molasses}
 \subsection{Fine-tuning to create the trap}
 \section{Results and discussion}
+\section{Future work}
 \vfill
 \pagebreak
 \section{References}
