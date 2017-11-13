@@ -9,7 +9,10 @@
 \usepackage{multicol}
 \usepackage{tikz}
 \usepackage{amsthm}
+\usepackage{hyperref}
 \usepackage{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
 \renewcommand{\bibsection}{}
 \usetikzlibrary{arrows}
 \usetikzlibrary{positioning}
@@ -77,7 +80,8 @@ Consider a simple two-state atom of mass \(m\), with a transition from a ground 
 If this photon is incident on the atom it can be absorbed to bring the atom to
 its excited state, and thus cause a change in velocity \(\Delta v=\frac{p}{m}=\frac{hf}{mc}\). The photon will then be re-emitted isotropically according to Compton scattering, resulting in a net velocity increase of the atom towards \(\vec{\hat{v}}\).
 
-Let's generalise this model to a gas of these atoms at temperature \(T\). If we project their velocities onto a given direction \(\vec{\hat{x}}\), we will have a Maxwell-Boltzmann distribution. The probability of a given atom having velocity \(v\) in this direction is \cite{muller}
+Let's generalise this model to a gas of these atoms at temperature \(T\). If we project their velocities onto a given direction \(\vec{\hat{x}}\), we will have a Maxwell-Boltzmann distribution. The probability of a given atom having velocity \(v\) in this direction is,
+where \(k_B\) is Boltzmann's constant:~\cite{muller}
 \begin{equation}
     f(v) = \sqrt{\frac{m}{2\pi k_B T}}\exp\left(\frac{-mv^2}{2k_B T}\right)
 \end{equation}
@@ -100,7 +104,7 @@ If we detune the source beam from resonance so that \(f_s=f-\Delta f\) for some 
 \end{equation}
 so that \(v<0\). Therefore, only those atoms moving towards the beam will be excited by the photons, causing a change in velocity
 \begin{equation}
-    \Delta v=\frac{hf_s}{mc}=\frac{h(f-\Delta f)}{mc}>0
+    \Delta v\approx\frac{hf}{mc}>0
 \end{equation}
 and thus a net slowing of the atom. If we repeat this process for all six directions \(\pm\vec{\hat{x}},\pm\vec{\hat{y}},\pm\vec{\hat{z}}\), the end result is a decrease in velocity in all directions, and therefore
 a decrease in temperature of the gas. Note that it is vital that the emission of the photons is isotropic, to ensure a slow-down in \textit{all} directions.
@@ -130,13 +134,13 @@ Below is a diagram of the hyperfine structure for rubidium-85, with the useful t
         \node [right=of D2] (D2Hyper) {};
 
         \draw (Ground)--(GroundHyper);
-        \draw [color=gray] (D1)--(D1Hyper);
+        \draw [dashed] (D1)--(D1Hyper);
         \draw (D2)--(D2Hyper);
 
         \draw [<->] ([xshift=0.5cm]Ground.west)--([xshift=0.5cm]D2.west)
             node [midway,left,yshift=-0.5cm]{780.2nm};
 
-        \draw [<->, color=gray] ([xshift=1cm]Ground.west)--([xshift=1cm]D1.west)
+        \draw [<->] ([xshift=1cm]Ground.west)--([xshift=1cm]D1.west)
             node [midway,right,yshift=-0.5cm]{795nm};
 
         \node [right=of GroundHyper, yshift=0.2cm, label=left:{0}] (GroundF3) {};
@@ -150,8 +154,8 @@ Below is a diagram of the hyperfine structure for rubidium-85, with the useful t
         \node [right=of D1Hyper, yshift=-0.2cm] (D1F2) {};
         \node [right=of D1F3, label=right:{3 = F}] (D1F3End) {};
         \node [right=of D1F2, label=right:{2    }] (D1F2End) {};
-        \draw [color=gray] (D1F3)--(D1F3End);
-        \draw [color=gray] (D1F2)--(D1F2End);
+        \draw [dashed] (D1F3)--(D1F3End);
+        \draw [dashed] (D1F2)--(D1F2End);
 
         \node [right=of D2Hyper, yshift=0.6cm, label=left:{0}] (D2F4) {};
         \node [right=of D2F4, label=right:{4 = F}] (D2F4End) {};
@@ -202,16 +206,6 @@ reduction in the measured intensity of the beam \(I\). Plotting \(I\) as a funct
 
 Unfortunately, since the atoms in the gas are undergoing random thermal motion, a wider range of frequencies will be absorbed by the atoms. This tends to obscure more subtle features of absorption spectra, such as hyperfine splitting, in a process known as Doppler broadening. To overcome this, two antiparallel beams are used; a strong ``pump''
 beam, and a weaker ``probe'' beam. The treatment here follows that of~\cite{satspec}.
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}
-        \draw (0,0) .. controls (1,0) and (2,-2) .. (2,-2);
-        \draw (2,-2) .. controls (3,-4) and (3.8,-2) .. (4,-1.6);
-        \draw (4,-1.6) .. controls (5,0) and (5.5,0) .. (6,0);
-        \draw (6,0) .. controls (7,0) and (8,0) .. (8,0);
-    \end{tikzpicture}
-    \caption{An example of a Doppler-broadened absorption spectrum. Note the lack of hyperfine features.}
-\end{figure}
 
 Consider a gas of atoms with resonant frequency \(f\) and the distribution of velocities from Equation 1, with a pump beam travelling towards \(+\vec{\hat{x}}\) and a probe beam travelling towards \(-\vec{\hat{x}}\). If these beams have a frequency \(f_s<f\), the pump beam will interact only with
 atoms travelling towards \(-\vec{\hat{x}}\), and the probe beam will interact only with atoms travelling towards \(\vec{\hat{x}}\). The opposite occurs if \(f_s>f\).
@@ -270,10 +264,47 @@ the detuned laser's resonance, and they are therefore more likely to interact wi
     \cite{wikiquad}}
 \end{figure}
 
-A subtlety is introduced by the Zeeman-shifted levels' dependence on polarisation. The lower energy level accepts only left-circularly polarised light, and the upper energy level accepts only right-circularly polarised light defined relative to the magnetic field. For atoms to be trapped, we need to shift the lower energy
-levels closer to the beam's resonance, but only for those atoms \textit{towards} the beam. Fortunately, on opposite sides of the field, the magnetic field has the opposite sign; therefore, the needed polarisation is reversed, and atoms on the opposite side to the beam are not affected.~\cite{umkc}
+A subtlety is introduced by the Zeeman-shifted levels' dependence on polarisation. The lower energy level accepts only left-circularly polarised (\(\sigma^-\)) light, and the upper energy level accepts only right-circularly polarised light (\(\sigma^+\)) (defined relative to the magnetic field). For atoms to be trapped, we need to shift the lower energy
+levels closer to the beam's resonance, but only for those atoms \textit{towards} the beam. Fortunately, on opposite sides of the field, the magnetic field has the opposite sign; therefore, the needed polarisation is reversed, and atoms on the opposite side to the beam's source are not affected.~\cite{umkc}
 \begin{figure}[h]
     \centering
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \begin{tikzpicture}[node distance=2cm]
+            \node (Bbase) {};
+            \node [above=of Bbase] (Btip) {};
+            \draw [->] (Bbase)--(Btip)
+                node [near end, yshift=0.3cm, label=above:{\(\vec{B}\)}] {};
+            \draw [<->] ([yshift=0.75cm]Bbase.center)--([yshift=-0.75cm]Btip.center);
+            \fill (0,1.1) circle (0.1cm);
+        \end{tikzpicture}
+        \caption{\(\sigma^-\) polarisation}
+    \end{subfigure}
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \begin{tikzpicture}[node distance=2cm]
+            \node (Bbase) {};
+            \node [above=of Bbase] (Btip) {};
+            \draw [->] (Bbase)--(Btip)
+                node [near end, yshift=0.3cm, label=above:{\(\vec{B}\)}] {};
+            \draw [<->] ([yshift=0.75cm]Bbase.center)--([yshift=-0.75cm]Btip.center);
+            \fill (0,1.1) circle (0.1cm);
+        \end{tikzpicture}
+        \caption{\(\pi\) polarisation (unshifted level)}
+    \end{subfigure}
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \begin{tikzpicture}[node distance=2cm]
+            \node (Bbase) {};
+            \node [above=of Bbase] (Btip) {};
+            \draw [->] (Bbase)--(Btip)
+                node [near end, yshift=0.3cm, label=above:{\(\vec{B}\)}] {};
+            \draw [<->] ([yshift=0.75cm]Bbase.center)--([yshift=-0.75cm]Btip.center);
+            \fill (0,1.1) circle (0.1cm);
+        \end{tikzpicture}
+        \caption{\(\sigma^+\) polarisation}
+    \end{subfigure}
+
     \caption{Sign convention for Zeeman-shifted levels' polarisation.}
 \end{figure}
 \vfill
