@@ -81,13 +81,18 @@ Let's generalise this model to a gas of these atoms at temperature \(T\). If we 
 \begin{equation}
     f(v) = \sqrt{\frac{m}{2\pi k_B T}}\exp\left(\frac{-mv^2}{2k_B T}\right)
 \end{equation}
-Place a source beam of photons of frequency \(f_s\) incident on the atoms, travelling in direction \(+\vec{\hat{x}}\). Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency
+Note that this distribution is symmetric about zero.
+
+Place a source beam of photons of frequency \(f_s\) incident on the atoms, travelling in direction \(+\vec{\hat{x}}\).
+Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency (CITATION)
 \begin{equation}
-    f_o =  f_s\sqrt{\frac{1-\frac{v}{c}}{1+\frac{v}{c}}}
+    f_o = f_s\left(1-\frac{v}{c}\right)
 \end{equation}
-The atom will absorb photons only if \(f_o\approx f\). Substituting this requirement and solving for \(v\) gives us
+for velocities \(v\ll c\), remembering that the typical formula is for motion towards the source.
+
+The atom will absorb photons only if \(f_o\approx f\). Substituting this requirement and solving for \(v\) gives
 \begin{equation}
-    v\approx c\frac{1-\left(\frac{f}{f_s}\right)^2}{1+\left(\frac{f}{f_s}\right)^2}
+    v\approx c\left(1-\frac{f}{f_s}\right)
 \end{equation}
 If we detune the source beam from resonance so that \(f_s=f-\Delta f\) for some \(0<\Delta f<f\), we have
 \begin{equation}
@@ -103,7 +108,8 @@ a decrease in temperature of the gas. Note that it is vital that the emission of
 This setup is commonly called ``optical molasses''.
 \subsubsection{The Doppler limit}
 Since spontaneous emission is isotropic, the average of the changes in velocity caused by emitted photons is zero. However, the mean squared velocity is \textit{not} zero; this supplies heat to the atoms at a constant rate.
-As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas.
+As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas. For a transition of natural linewidth \(\gamma\), this temperature limit is (CITATION)
+\[ T_D = \frac{h\gamma}{4\pi k_B} \]
 \subsection{Hyperfine structure of rubidium-85}
 \subsubsection{Hyperfine splitting}
 The simplest atom, hydrogen, can be modelled as a solitary electric monopole -- the nucleus -- with an electron orbiting according to quantum or classical electrodynamics as required\footnote{That is to say, hydrogen-1 rather than deuterium or tritium.}. The same
@@ -113,20 +119,83 @@ of the electric and magnetic multipoles, these energy levels break down to revea
 Below is a diagram of the hyperfine structure for rubidium-85, with the useful transitions labelled.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{images/transitions.png}
-    \caption{Diagram of the relevant transitions for rubidium-85~\cite{ust}}
+    \begin{tikzpicture}[node distance=2.5cm]
+        \node [label=left:\(5S_{1/2}\)] (Ground) {};
+        \node [right=of Ground] (GroundHyper) {};
+
+        \node [above=of Ground, label=left:\(5P_{1/2}\)] (D1) {};
+        \node [right=of D1] (D1Hyper) {};
+
+        \node [above=1.5cm of D1, label=left:\(5P_{3/2}\)] (D2) {};
+        \node [right=of D2] (D2Hyper) {};
+
+        \draw (Ground)--(GroundHyper);
+        \draw [color=gray] (D1)--(D1Hyper);
+        \draw (D2)--(D2Hyper);
+
+        \draw [<->] ([xshift=0.5cm]Ground.west)--([xshift=0.5cm]D2.west)
+            node [midway,left,yshift=-0.5cm]{780.2nm};
+
+        \draw [<->, color=gray] ([xshift=1cm]Ground.west)--([xshift=1cm]D1.west)
+            node [midway,right,yshift=-0.5cm]{795nm};
+
+        \node [right=of GroundHyper, yshift=0.2cm, label=left:{0}] (GroundF3) {};
+        \node [right=of GroundHyper, yshift=-0.2cm, label=left:{-3.036 GHz}] (GroundF2) {};
+        \node [right=of GroundF3, label=right:{3 = F}] (GroundF3End) {};
+        \node [right=of GroundF2, label=right:{2    }] (GroundF2End) {};
+        \draw (GroundF3)--(GroundF3End);
+        \draw (GroundF2)--(GroundF2End);
+
+        \node [right=of D1Hyper, yshift=0.2cm] (D1F3) {};
+        \node [right=of D1Hyper, yshift=-0.2cm] (D1F2) {};
+        \node [right=of D1F3, label=right:{3 = F}] (D1F3End) {};
+        \node [right=of D1F2, label=right:{2    }] (D1F2End) {};
+        \draw [color=gray] (D1F3)--(D1F3End);
+        \draw [color=gray] (D1F2)--(D1F2End);
+
+        \node [right=of D2Hyper, yshift=0.6cm, label=left:{0}] (D2F4) {};
+        \node [right=of D2F4, label=right:{4 = F}] (D2F4End) {};
+        \node [right=of D2Hyper, yshift=0.2cm, label=left:{-121 MHz}] (D2F3) {};
+        \node [right=of D2F3, label=right:{3}] (D2F3End) {};
+        \node [right=of D2Hyper, yshift=-0.2cm, label=left:{-184 MHz}] (D2F2) {};
+        \node [right=of D2F2, label=right:{2}] (D2F2End) {};
+        \node [right=of D2Hyper, yshift=-0.6cm, label=left:{-213 MHz}] (D2F1) {};
+        \node [right=of D2F1, label=right:{1}] (D2F1End) {};
+        \draw (D2F4)--(D2F4End);
+        \draw (D2F3)--(D2F3End);
+        \draw (D2F2)--(D2F2End);
+        \draw (D2F1)--(D2F1End);
+
+        \draw [color=blue, ->] ([xshift=0.5cm]GroundF3.west)--([xshift=0.5cm]D2F4.west)
+            node [midway, left, yshift=-0.8cm] {Cooling};
+        \draw [->] ([xshift=0.65cm]GroundF3.west)--([xshift=0.65cm]D2F3.west);
+        \draw [->] ([xshift=0.8cm]GroundF3.west)--([xshift=0.8cm]D2F2.west);
+
+        \draw [->] ([xshift=1.2cm]D2F4.west)--([xshift=1.2cm]GroundF3.west);
+        \draw [->] ([xshift=1.35cm]D2F3.west)--([xshift=1.35cm]GroundF3.west);
+        \draw [->] ([xshift=1.5cm]D2F3.west)--([xshift=1.5cm]GroundF2.west);
+        \draw [->] ([xshift=1.65cm]D2F2.west)--([xshift=1.65cm]GroundF3.west);
+        \draw [->] ([xshift=1.8cm]D2F2.west)--([xshift=1.8cm]GroundF2.west);
+        \draw [->] ([xshift=1.95cm]D2F1.west)--([xshift=1.95cm]GroundF2.west);
+        
+        \draw [->] ([xshift=2.35cm]GroundF2.west)--([xshift=2.35cm]D2F1.west);
+        \draw [->] ([xshift=2.5cm]GroundF2.west)--([xshift=2.5cm]D2F2.west);
+        \draw [color=red, ->] ([xshift=2.65cm]GroundF2.west)--([xshift=2.65cm]D2F3.west)
+            node [midway, right, yshift=-0.5cm] {Repump};
+    \end{tikzpicture}
+    \caption{Diagram of the allowed transitions for rubidium-85.~\cite{ust}}
 \end{figure}
 \subsubsection{Closed optical loops, forbidden transitions, and dark states, oh my!}
 We would love to have a simple two-state atom to perform optical cooling on; unfortunately, this is not possible in practice due to hyperfine splitting. The easiest atomic structure to cool is one that has a so-called ``closed optical loop''; that is,
-an excitation-emission event that always returns an atom to its original state, ready to absorb another identical photon. Rubidium-85 has such a transition between the \(5S_{1/2},\,F=3\) state and the \(5P_{3/2},\,F'=4\) state, since every other possible decay is a ``forbidden transition''.
+an excitation-emission event that always returns an atom to its original state, ready to absorb another identical photon. Rubidium-85 has such a transition between the \(5S_{1/2},\,F=3\) state and the \(5P_{3/2},\,F=4\) state, since every other possible decay is a ``forbidden transition''.
 
-Not every pair of source and destination energy levels forms a valid transition. According to selection rules such as conservation of angular momentum and parity, only a small subset are allowed by quantum mechanics. Take an atom in the excited \(5P_{3/2},\,F'=4\) state.
+Not every pair of source and destination energy levels forms a valid transition. According to selection rules such as conservation of angular momentum and parity, only a small subset are allowed by quantum mechanics. Take an atom in the excited \(5P_{3/2},\,F=4\) state.
 It is prevented from decaying to any of the \(5P_{1/2}\) states because the spin would change direction, violating parity~\cite{harandbert}. It also cannot decay to the \(5S_{1/2},\,F=2\) state, since this would require an angular momentum change of -2, and a photon carries
 a spin of 1. Thus, it can \textit{only} decay back to the \(5S_{1/2},\,F=3\) state, forming a closed optical loop.
 
-In practice, lasers must be detuned from resonance to allow for Doppler cooling. This has the unfortunate complication of placing the frequency in an overlap between the \(5P_{3/2},\,F'=4\) and the \(5P_{3/2},\,F'=3\) states, meaning there is a small but nonzero probability that an
+In practice, lasers must be detuned from resonance to allow for Doppler cooling. This has the unfortunate complication of placing the frequency in an overlap between the \(5P_{3/2},\,F=4\) and the \(5P_{3/2},\,F=3\) states, meaning there is a small but nonzero probability that an
 excited atom will arrive at a state that does \textit{not} form a closed optical loop. While an atom in this state still cannot decay to any of the \(5P_{1/2}\) states, it \textit{can} decay to the \(5S_{1/2},\,F=2\) state, since this requires an angular momentum change of only -1.
-The cooling laser cannot excite an atom in this state, so we call it a ``dark state''. This would prevent further cooling of the atom if a repumping laser was not employed at the frequency needed to excite the atom back to the \(5P_{3/2},\,F'=3\) state.
+The cooling laser cannot excite an atom in this state, so we call it a ``dark state''. This would prevent further cooling of the atom if a repumping laser was not employed at the frequency needed to excite the atom back to the \(5P_{3/2},\,F=3\) state.
 \subsection{Saturated absorption spectroscopy}
 Absorption spectroscopy is theoretically straightforward. Given a gas of atoms with a transition of frequency \(f\), a laser scanning through a range of frequencies between \(f\pm\Delta f\) for some \(0<\Delta f<f\) will excite atoms when it is in the vicinity of \(f\). This causes a
 reduction in the measured intensity of the beam \(I\). Plotting \(I\) as a function of \(f\) reveals all transitions of the atom in the scanned range.
@@ -136,14 +205,16 @@ beam, and a weaker ``probe'' beam. The treatment here follows that of~\cite{sats
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
-        \draw (0,0) .. controls (1,0) and (2,-2) .. (3,-4);
-        \draw (3,-4) .. controls (4,-1) and (5,0) .. (7,0);
+        \draw (0,0) .. controls (1,0) and (2,-2) .. (2,-2);
+        \draw (2,-2) .. controls (3,-4) and (3.8,-2) .. (4,-1.6);
+        \draw (4,-1.6) .. controls (5,0) and (5.5,0) .. (6,0);
+        \draw (6,0) .. controls (7,0) and (8,0) .. (8,0);
     \end{tikzpicture}
-    \caption{An example of a Doppler-broadened absorption spectrum.}
+    \caption{An example of a Doppler-broadened absorption spectrum. Note the lack of hyperfine features.}
 \end{figure}
 
 Consider a gas of atoms with resonant frequency \(f\) and the distribution of velocities from Equation 1, with a pump beam travelling towards \(+\vec{\hat{x}}\) and a probe beam travelling towards \(-\vec{\hat{x}}\). If these beams have a frequency \(f_s<f\), the pump beam will interact only with
-atoms travelling towards \(-\vec{\hat{x}}\), and the probe beam will interact only with atoms travelling towards \(\vec{\hat{x}}\), and vice versa if \(f_s>f\).
+atoms travelling towards \(-\vec{\hat{x}}\), and the probe beam will interact only with atoms travelling towards \(\vec{\hat{x}}\). The opposite occurs if \(f_s>f\).
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[node distance=2cm]
@@ -161,8 +232,8 @@ atoms travelling towards \(-\vec{\hat{x}}\), and the probe beam will interact on
         \draw [->, color=red, line width=3pt] ([yshift=-0.3cm]RightLaserStart.center)--([yshift=-0.3cm]B.center);
         \node [right=1cm of B, label=right:\(\vec{v}\)] (BArrowEnd) {};
         \node [left=1cm of A, label=left:\(\vec{v}\)] (AArrowEnd) {};
-        \draw [->, line width=1pt] (A)--(AArrowEnd);
-        \draw [->, line width=1pt] (B)--(BArrowEnd);
+        \draw [->] (A)--(AArrowEnd);
+        \draw [->] (B)--(BArrowEnd);
     \end{tikzpicture}
     \caption{Behaviour of the system when the probe and pump beams are off resonance.}    
 \end{figure}
@@ -181,10 +252,6 @@ excited state at any time. Given this condition, many of the atoms will be in th
     \end{tikzpicture}
     \caption{Behaviour of the system when the probe and pump beams are on resonance.}
 \end{figure}
-\begin{figure}[h]
-    \centering
-    \caption{An example of a saturated absorption spectrum.}
-\end{figure}
 \subsubsection{Crossover peaks}
 A wrinkle that shows up in saturated absorption spectroscopy experiments is caused by an effect known as a ``crossover peak''. These tend to be much stronger than the actual hyperfine peaks, and are caused by interactions with atoms travelling at pathological velocities.
 
@@ -193,12 +260,14 @@ between the transitons, both the pump and probe beams will be seen as on resonan
 \subsection{The Zeeman effect}
 Typical atomic energy levels have degeneracy; there are multiple possible configurations at the same energy level. These vary in the direction of the magnetic moments, so an external magnetic field causes these energy levels to split into three --- a higher energy level, a lower energy level, and the original level.
 \subsection{Combined effects forming a MOT}
-If we use two electromagnetic coils in anti-Helmholtz configuration, their magnetic field forms a magnetic quadrupole field, with a strength directly proportional to distance from their shared centre. Atoms that are further from this centre therefore experience stronger Zeeman splitting; their energy levels move closer to
+If we use two electromagnetic coils in anti-Helmholtz configuration, their magnetic field forms a magnetic quadrupole field\footnote{For a really cool animated version, see \url{http://tinyurl.com/y8zkkagb}.}, with a strength directly proportional to distance from their shared centre. Atoms that are further from this centre therefore experience stronger Zeeman splitting; their energy levels move closer to
 the detuned laser's resonance, and they are therefore more likely to interact with the cooling laser. This results in a net restorative force towards the trap's centre.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{images/quadrupole.png}
-    \caption{A sketch of the field lines of a magnetic quadrupole.~\cite{wikiquad}}
+    \caption{
+        A sketch of the field lines of a magnetic quadrupole.
+    \cite{wikiquad}}
 \end{figure}
 
 A subtlety is introduced by the Zeeman-shifted levels' dependence on polarisation. The lower energy level accepts only left-circularly polarised light, and the upper energy level accepts only right-circularly polarised light defined relative to the magnetic field. For atoms to be trapped, we need to shift the lower energy
