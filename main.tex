@@ -38,6 +38,7 @@ then discuss the experimental procedures required to build the MOT;\@ I will con
 discussion of our results, followed by an outline of ways to extend the experiment.
 
 \begin{center}    
+    \includegraphics[width=0.75\textwidth]{images/overview}
 \subsection*{Supervised by Andy McCulloch and Robert Scholten}
 University of Melbourne School of Physics\\
 Thanks also to Alexander Wood for his tireless assistance in the lab.
@@ -323,11 +324,22 @@ the angular displacement from the diffraction grating.
 \end{figure}
 
 A piezoelectric transducer (PZT) rests against the diffraction grating to allow for scanning of the laser's frequency by sending a
-triangle wave to the PZT.\@ This is provided by a MOGLabs diode laser controller, providing the ability to precisely control the range
-and midpoint of this scan by changing the current of the diode, as well as a frequency offset.
+triangle wave to the PZT.\@ This is provided by a MOGLabs diode laser controller (MOGBox), providing the ability to precisely control the range
+and midpoint of this scan by changing the current of the diode, as well as a frequency offset. The entire laser is placed on a large thermal mass,
+which is temperature-controlled to reduce thermal inconsistencies in the laser's behaviour.
 
 We used one laser emitting approximately 90 mW of laser power as the cooling laser, and another emitting approximately 27.3 mW as the
 repumping laser. Since the cooling beam was split into three pieces, it needed to have a much higher power than the repumping laser.
+\subsubsection{Mode hops}
+An idiosyncracy of ECDLs is the phenomenom referred to as mode hopping. Due to the multitude of factors affecting the lasing frequency, including
+internal cavity length, external cavity length, and the diffraction grating reflectance, it is possible for the powers of adjacent frequencies to be
+very close together. This means small changes in the current or frequency control can cause large jumps in the laser's actual frequency. This is an
+unavoidable aspect of working with ECDLs, and needs to be accounted for during the tuning process.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.5\textwidth]{images/mode-hops}
+    \caption{A diagram of the factors influencing lasing frequency helpfully provided by~\cite{moglabsecd}.}
+\end{figure}
 \subsection{Absorption spectroscopy}
 The first thing that needs to be done to create the MOT is to ensure the lasers can be tuned accurately to hyperfine transitions. As a
 first stepping stone, we built a simple absorption spectroscopy setup.
@@ -336,10 +348,49 @@ first stepping stone, we built a simple absorption spectroscopy setup.
     \caption{Diagram of the basic absorption spectroscopy bench.}
 \end{figure}
 
-Our first effort did not use the isolators or waveplate. By reducing current to the laser, we foundthat the photodiode was oversaturated with power, so the waveplate
+We used a wavemeter to get the current and frequency to the correct wavelength of 780.24nm. By linking the photodiode to an oscilloscope, we were able to see the absorption
+spectrum as seen by the photodiode. This is paired with a trigger signal sent from the diode controller, so that an oscilloscope sweep begins at the same time as the laser's
+scan.
+
+Our first effort did not use the isolators or waveplate. By reducing current to the laser, we found that the photodiode was oversaturated with power, so the waveplate
 was added to allow us to change the beam balance through the PBS.\@ The spectroscopy obtained was still quite unstable after this change; we determined by tapping the
 breadboard that this was likely due to reflections re-entering the diode. We addressed this by adding the optical isolators.
+
+After resolving the issues, we found an absorption spectrum resembling\footnote{I do not have a record of the exact spectrum obtained on our first successful measurement.} the below figure.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/broadened-spec}
+    \caption{An example of Doppler-broadened absorption spectroscopy for rubidium.}
+\end{figure}
 \subsection{Saturated absorption spectroscopy}
+The next step is to introduce a retro-reflected laser beam to reveal the hyperfine transitions. This introduces some alignment concerns, since to show effective saturated absorption, the pump
+and probe beams must interact with the same atoms. We used an IR finder scope so that the beam's position entering and leaving the front of the cell could be aligned via the mirror's translation
+stage. A diagram of the successful optical arrangement is included below.
+\begin{figure}[h]
+    \centering
+    \caption{Optical setup used for saturated absorption spectroscopy.}
+\end{figure}
+
+After aligning the arrangement, the below spectrum was obtained:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/satabs-shit-error}
+    \caption{Saturated absorption spectroscopy for rubidium. The yellow line is the photodiode signal, and the blue line is the error signal.}
+\end{figure}
+\subsubsection{Error signals}
+While the actual absorption spectrum clearly shows the hyperfine transitions, the error signal is troubling. The MOGBox has functionality that allows the laser's frequency
+to be ``locked'' to a particular frequency. This is useful because lasers, being maliciously disobedient, have a tendency to drift away from the frequency they are set to. The lock works by analysing
+the error signal, and attempting to keep the laser centred on the zero-crossing point of the signal. It does this by looking for appropriate gradients in the signal; therefore, the lock is at its most
+reliable when it has a very sharp gradient, with a low on one side of the transiton and a high value on the other. The signal shown in Figure 10 visibly lacks this vital property.
+
+By process of elimination\footnote{twiddling potentiometers more or less at random with a multimeter}, an issue with the MOGBox's signal generator was discovered and resolved. With some more careful
+optical alignment, the below error signal was obtained:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/satabs-good-erro}
+    \caption{Saturated absorption spectroscopy, with a more useful error signal.}
+\end{figure}
+\subsection{Fibre optic coupling}
 \subsection{Vacuum cell setup}
 \subsection{Magnetic quadrupole}
 \subsection{Arrangement for optical molasses}
