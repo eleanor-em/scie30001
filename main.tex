@@ -16,6 +16,7 @@
 \renewcommand{\bibsection}{}
 \usetikzlibrary{arrows}
 \usetikzlibrary{positioning}
+\tikzset{>=latex}
 \usepackage{verbatim}
 \usepackage[margin=2cm]{geometry}
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
@@ -275,10 +276,10 @@ levels closer to the beam's resonance, but only for those atoms \textit{towards}
             \node [above=of Bbase] (Btip) {};
             \draw [->] (Bbase)--(Btip)
                 node [near end, yshift=0.3cm, label=above:{\(\vec{B}\)}] {};
-            \draw [<->] ([yshift=0.75cm]Bbase.center)--([yshift=-0.75cm]Btip.center);
-            \fill (0,1.1) circle (0.1cm);
+            \draw [->] (0.8cm,0.9cm) arc [start angle=330, end angle=0, x radius=1cm, y radius=0.5cm];
+            \fill (-1.05,1.1) circle (0.1cm);
         \end{tikzpicture}
-        \caption{\(\sigma^-\) polarisation}
+        \caption{\(\sigma^-\) polarisation (lower level)}
     \end{subfigure}
     \begin{subfigure}{.3\textwidth}
         \centering
@@ -299,10 +300,10 @@ levels closer to the beam's resonance, but only for those atoms \textit{towards}
             \node [above=of Bbase] (Btip) {};
             \draw [->] (Bbase)--(Btip)
                 node [near end, yshift=0.3cm, label=above:{\(\vec{B}\)}] {};
-            \draw [<->] ([yshift=0.75cm]Bbase.center)--([yshift=-0.75cm]Btip.center);
-            \fill (0,1.1) circle (0.1cm);
+                \draw [->] (0.95cm,1.13cm) arc [start angle=0, end angle=330, x radius=1cm, y radius=0.5cm];
+                \fill (-1.05,1.1) circle (0.1cm);
         \end{tikzpicture}
-        \caption{\(\sigma^+\) polarisation}
+        \caption{\(\sigma^+\) polarisation (higher level)}
     \end{subfigure}
 
     \caption{Sign convention for Zeeman-shifted levels' polarisation.}
@@ -311,7 +312,32 @@ levels closer to the beam's resonance, but only for those atoms \textit{towards}
 \pagebreak
 \section{Experimental procedure}
 \subsection{External-cavity diode lasers}
+The heart and soul of the experiment was two external-cavity diode lasers (ECDLs). The design uses a laser diode
+with a high-reflectivity rear surface, and a low-reflectivity front surface; the lasing is instead performed by reflections
+from a diffraction grating placed approximately 20mm in front of the diode.~\cite{moglabsecd} An additional mirror is used to counteract
+the angular displacement from the diffraction grating.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.3\textwidth]{images/ecdl-internals.png}
+    \caption{Diagram of the laser internals.}
+\end{figure}
+
+A piezoelectric transducer (PZT) rests against the diffraction grating to allow for scanning of the laser's frequency by sending a
+triangle wave to the PZT.\@ This is provided by a MOGLabs diode laser controller, providing the ability to precisely control the range
+and midpoint of this scan by changing the current of the diode, as well as a frequency offset.
+
+We used one laser emitting approximately 90 mW of laser power as the cooling laser, and another emitting approximately 27.3 mW as the
+repumping laser. Since the cooling beam was split into three pieces, it needed to have a much higher power than the repumping laser.
 \subsection{Absorption spectroscopy}
+The first thing that needs to be done to create the MOT is to ensure the lasers can be tuned accurately to hyperfine transitions. As a
+first stepping stone, we built a simple absorption spectroscopy setup.
+\begin{figure}[h]
+    \centering
+    \caption{Diagram of the basic absorption spectroscopy bench.}
+\end{figure}
+
+Our first effort did not use the isolators or waveplate. We found first that the photodiode was oversaturated with power, so the waveplate
+was added to allow changing the beam balance through the PBS.\@
 \subsection{Saturated absorption spectroscopy}
 \subsection{Vacuum cell setup}
 \subsection{Magnetic quadrupole}
