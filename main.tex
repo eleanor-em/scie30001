@@ -1,5 +1,6 @@
 \documentclass[11pt,twoside,a4paper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{gensymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}		
 \usepackage{amssymb}
@@ -90,7 +91,7 @@ where \(k_B\) is Boltzmann's constant:~\cite{muller}
 Note that this distribution is symmetric about zero.
 
 Place a source beam of photons of frequency \(f_s\) incident on the atoms, travelling in direction \(+\vec{\hat{x}}\).
-Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency (CITATION)
+Due to Doppler shifting, an atom travelling at velocity \(v\vec{\hat{x}}\) relative to the lab frame will observe photons at the frequency \cite{encyc}
 \begin{equation}
     f_o = f_s\left(1-\frac{v}{c}\right)
 \end{equation}
@@ -113,8 +114,9 @@ a decrease in temperature of the gas. Note that it is vital that the emission of
 
 This setup is commonly called ``optical molasses''.
 \subsubsection{The Doppler limit}
-Since spontaneous emission is isotropic, the average of the changes in velocity caused by emitted photons is zero. However, the mean squared velocity is \textit{not} zero; this supplies heat to the atoms at a constant rate.
-As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas. For a transition of natural linewidth \(\gamma\), this temperature limit is (CITATION)
+Since spontaneous emission is isotropic, the average of the changes in velocity caused by emitted photons is zero. However, the mean squared velocity is \textit{not} zero.
+Practically speaking, this corresponds to a random walk in the particle's momentum space, and thus a nonzero amount of constant heat.
+As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas. For a transition of natural linewidth \(\gamma\), this temperature limit is~\cite{lett1989}
 \[ T_D = \frac{h\gamma}{4\pi k_B} \]
 \subsection{Hyperfine structure of rubidium-85}
 \subsubsection{Hyperfine splitting}
@@ -365,7 +367,8 @@ After resolving the issues, we found an absorption spectrum resembling\footnote{
 \subsection{Saturated absorption spectroscopy}
 The next step is to introduce a retro-reflected laser beam to reveal the hyperfine transitions. This introduces some alignment concerns, since to show effective saturated absorption, the pump
 and probe beams must interact with the same atoms. We used an IR finder scope so that the beam's position entering and leaving the front of the cell could be aligned via the mirror's translation
-stage. A diagram of the successful optical arrangement is included below.
+stage. Furthermore, a \(\lambda/4\) waveplate was added so that when the retro-reflected beam reached the PBS, its total phase shift would be \(\lambda/2\); this allowed us to control how much
+power reached the photodiode, as well as controlling how much power travelled through the rubidium cell. A diagram of the successful optical arrangement is included below.
 \begin{figure}[h]
     \centering
     \caption{Optical setup used for saturated absorption spectroscopy.}
@@ -391,9 +394,46 @@ optical alignment, the below error signal was obtained:
     \caption{Saturated absorption spectroscopy, with a more useful error signal.}
 \end{figure}
 \subsection{Fibre optic coupling}
+As we were not sure what our exact arrangement would be, we elected to couple our lasers to fibre optics for the sake of flexibility. While this caused a noticeable drop in output power, the ability
+to easily change our optical setup was invaluable throughout the rest of the experiment. This stage introduced a few difficulties; first was the process of ``walking'' the beam to achieve maximum power
+transmission of 70-80\%. The laser was fed into the fibre optic couple using two mirrors.
+\begin{figure}[h]
+    \centering
+    \caption{Optical arrangement used for fibre coupling.}
+\end{figure}
+
+First, a rough alignment is achieved by trial and error. It is important to do this on a low power setting to avoid damaging the couple or the fibre itself. Once an appreciable transmission is measured
+on the power meter, further coupling requires the walking process. There are four degrees of freedom -- two axes for each mirror -- and the optimal alignment can be found in a well-defined manner.
+\begin{enumerate}
+    \item Choose an axis.
+    \item De-align the mirror closest to the PBS in this axis.
+    \item Move the further mirror the other direction in this axis.
+    \item If the maximal power increases, repeat the process; otherwise, reverse the de-aligning direction.
+\end{enumerate}
+The walking process is time-consuming and fiddly, but we were able to achieve transmission rates of approximately 75\% for both lasers. A complication is introduced by the sensitivity of the fibre
+couple and the optic itself to the laser's polarisation; the maximum transmission can only be achieved by tuning the couple's rotation to the beam's polarisation, but the optic itself has different
+waveguide modes.
+
+To ensure the laser's polarisation remained well-behaved through the fibre, we used a polarimeter connected to the end of the fibre optic, allowing us to observe the polarisation's
+location on a Poincaré sphere. By gently squeezing the fibre optic cable, we were able to observe the precession of this point about a central axis. By adjusting the polarisation with a \(\lambda/2\)
+waveplate until the precession was minimal, we could guarantee a stable polarisation. Note that the fibre optic has a ``fast'' and ``slow'' axis of polarisation. The slow axis will never be adequately
+stable, so a rotation by 180\degree~may be necessary.
+
+A final problem was encountered when the laser we intended for cooling was replaced by a more powerful one; this was a much narrower laser, and this meant a different lens was required to successfuly
+couple the laser. To determine the size of lens needed, we measured the width of the beam using a Thorlabs beamalyser.
 \subsection{Vacuum cell setup}
+After successfully coupling our lasers, the next step was to establish a good vacuum. We used a vacuum cell with six glass windows for the trap, as well as a phlange for two pumps and an ion gauge.
+We used a roughing pump to get the pressure of the cell below (PRESSURE), which functions in the obvious way by simply sucking air out. Below this threshold, an ion pump is employed; this works by
+ionising the gas left in the vacuum cell, and using an electric potential on the order of 1-10kV to accelerate the ions towards a solid electrode. In theory, once the ion pump is engaged, the roughing
+pump is no longer needed. However, due to an unfortunate run-in with a power switch and a faulty valve, we elected to keep the roughing pump running throughout the experiment.
+
+A rubidium source was placed in the vacuum approximately above the quadrupole's minimum in the form of two rubidium getters. These are filaments of wire coated in a rubidium salt. When current is run
+through them, rubidium atoms boil off to create a low-pressure gas.
 \subsection{Magnetic quadrupole}
-\subsection{Arrangement for optical molasses}
+The magnetic quadrupole was provided by two magnetic coils in anti-Helmholtz configuration. These were wrapped around the outside of the vacuum cell, to the front and rear of the x-y arms.
+We noticed that the power dissipated by the coils was not equal, so to balance the magnetic field, we added two more coils above and below the vacuum cell. This had the added benefit of being able to
+control the vertical position of the field's minimum, as well as the horizontal position.
+\subsection{Optical arrangement for the molasses}
 \subsection{Fine-tuning to create the trap}
 \section{Results and discussion}
 \section{Future work}
