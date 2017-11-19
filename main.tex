@@ -423,7 +423,13 @@ A final problem was encountered when the laser we intended for cooling was repla
 couple the laser. To determine the size of lens needed, we measured the width of the beam using a Thorlabs beamalyser.
 \subsection{Vacuum cell setup}
 After successfully coupling our lasers, the next step was to establish a good vacuum. We used a vacuum cell with six glass windows for the trap, as well as a phlange for two pumps and an ion gauge.
-We used a roughing pump to get the pressure of the cell below (PRESSURE), which functions in the obvious way by simply sucking air out. Below this threshold, an ion pump is employed; this works by
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/mot}
+    \caption{The vacuum cell used for the magneto-optical trap, with axes labeled.}
+\end{figure}
+
+We used a roughing pump to get the pressure of the cell below \(10^{-5}\)mBar, which functions in the obvious way by simply sucking air out. Below this threshold, an ion pump is employed; this works by
 ionising the gas left in the vacuum cell, and using an electric potential on the order of 1-10kV to accelerate the ions towards a solid electrode. In theory, once the ion pump is engaged, the roughing
 pump is no longer needed. However, due to an unfortunate run-in with a power switch and a faulty valve, we elected to keep the roughing pump running throughout the experiment.
 
@@ -434,9 +440,90 @@ The magnetic quadrupole was provided by two magnetic coils in anti-Helmholtz con
 We noticed that the power dissipated by the coils was not equal, so to balance the magnetic field, we added two more coils above and below the vacuum cell. This had the added benefit of being able to
 control the vertical position of the field's minimum, as well as the horizontal position.
 \subsection{Optical arrangement for the molasses}
+The optical setup was split into two distinct parts; decoupling the lasers from the optical fibres and splitting off a cooling beam for the z direction on the horizontal, and splitting the beams for the
+x and y directions in the x-y plane.
+
+In order to create three orthogonal retro-reflected beams, the cooling beam was split twice with appropriate polarisation to ensure a relatively even split between the three beams; ``relatively'' because
+the x-y beams were slightly stronger, since they have to resist gravity. To increase the potential size of the MOT, we used beam expanders in the three axes after being split, which was especially relevant
+due to the small size of the beam.
+\begin{figure}[h]
+    \centering
+    \caption{Horizontal optical arrangement.}
+\end{figure}
+
+An often-undiscussed technicality regarding the polarisations of a MOT is that, while states are often given as \(\sigma^+\) or \(\sigma^-\), by the team the beam passes through the centre its polarisation
+\textit{relative to the magnetic field} has been reversed. As discussed above, this is vital to the MOT's correct functioning. To achieve this setup, \(\lambda/4\) waveplates are included both for the incident
+beam and the reflected beam. In this manner, the light is rotated fully to the opposite polarisation on its return trip through the MOT.\@ This is illustrated below.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm]
+        \node [] (A) {};
+        \node [label=above:incident beam, left=5cm of A] (LeftLaserStart) {};
+        \node [right=5cm of A, label=above:\(\pi\)] (LeftLaserEnd) {};
+        \draw [->, color=red, line width=4pt] (LeftLaserStart)--(LeftLaserEnd);
+        \node [label=below:reflected beam, right=5cm of A, yshift=-0.3cm] (RightLaserStart) {};
+        \node [left=5cm of A, yshift=-0.3cm] (RightLaserEnd) {};
+        \draw [->, color=red, line width=4pt] (RightLaserStart)--(RightLaserEnd);
+
+        \node [draw, shape=rectangle, right=1.2cm of LeftLaserStart, minimum height=2cm, yshift=-0.15cm] (LeftWP) {};
+        \node [draw, shape=rectangle, left=1.2cm of RightLaserStart, minimum height=2cm, yshift=0.15cm] (RightWP) {};]
+
+        \node [right=1cm of LeftWP, yshift=1.5cm, label=above:\(\vec{B}\), label=below left:\(\sigma^+\)] (LeftBEnd) {};
+        \node [right=1cm of LeftWP, yshift=-1.5cm, label=above left:\(\sigma^-\)] (LeftBStart) {};
+        \draw [->] (LeftBStart)--(LeftBEnd);
+        
+        \node [left=1cm of RightWP, yshift=-1.5cm, label=below:\(\vec{B}\), label=above right:\(\sigma^+\)] (RightBEnd) {};
+        \node [left=1cm of RightWP, yshift=1.5cm, label=below right:\(\sigma^-\)] (RightBStart) {};
+        \draw [->] (RightBStart)--(RightBEnd);
+    \end{tikzpicture}
+    \caption{Laser light enters in the \(\sigma^+\) configuration, leaves in \(\sigma^{-}\) polarisation, and returns in \(\sigma^+\) configuration.}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \caption{x-y optical setup.}
+\end{figure}
 \subsection{Fine-tuning to create the trap}
+Once the pieces were in place, observing the MOT was surprisingly easy. We used a thermal camera to observe the interior of the trap, and ``parked'' the lasers
+in the vicinity of the appropriate transitions by reducing the span to its minimum. From here, small perturbations were made to the cooling laser's frequency
+until a glowing cloud of atoms was observed in the trap.
+
+We confirmed this was a MOT in two ways; first by varying the power of the magnetic coils, which translated the cloud, and second by blocking the laser's path
+and observing the cloud's slow dissipation.
 \section{Results and discussion}
-\section{Future work}
+Due to a lack of time and equipment, we were unable to make quantitative measurements of the MOT.\@ However, we were able to confirm its existence, and make adjustments
+to the experiment to optimise its size. We noticed that there were two ``modes'' of the MOT; a small roughly spherical ball, and a larger ``stormcloud'' shape. The ball
+was noticeably more stable with respect to the cooling laser's frequency, but was much smaller.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=.7\textwidth]{images/success1}
+        \caption{The first stable MOT we observed. Note the horizontal displacement from centre.}
+    \end{subfigure}
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=.7\textwidth]{images/success2}
+        \caption{The horizontal displacement was fixed by adding another coil to the weaker coil. This is an example of the ball mode.}
+    \end{subfigure}
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=.7\textwidth]{images/success3}
+        \caption{By adding coils above and below the trap, bigger MOTs were observed. This is an example of the stormcloud mode.}
+    \end{subfigure}
+
+    \caption{Images of the MOT captured using an infrared camera.}
+\end{figure}
+
+An ideal way to extend this experiment would be to make a measurement of the trap's temperature. One possible way to do this is to use a high-speed camera, and to observe
+the persistence of the cloud as the laser is blocked. A measurement of the particles' mean free path can be made from this information, and hence the temperature can be derived.
+
+Another option is to focus the fluorescence from the MOT and feed it to an optical detector. Quantitative measurements of the effects of different perturbations can then be made.
+
+The conclusion is that third-year students are certainly capable of building a MOT from scratch with appropriate guidance. Much of the difficult work comes from aligning the various
+optical components; a viable option for a shorter-term practical would be to do most of this work for the students. Some aspects, such as the polarisation for the beam spliters and
+the retro-reflected beams, could be passed on to the students, as well as tuning the laser to reveal saturated absorption spectroscopy.
+
+Thank you again to my supervisors for giving me and my partner this opportunity.
 \vfill
 \pagebreak
 \section{References}
