@@ -10,7 +10,7 @@
 \usepackage{multicol}
 \usepackage{tikz}
 \usepackage{amsthm}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{natbib}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -117,10 +117,12 @@ This setup is commonly called ``optical molasses''.
 Since spontaneous emission is isotropic, the average of the changes in velocity caused by emitted photons is zero. However, the mean squared velocity is \textit{not} zero.
 Practically speaking, this corresponds to a random walk in the particle's momentum space, and thus a nonzero amount of constant heat.
 As the temperature of the atoms decreases, eventually the heating and cooling rates will be in equilibrium, setting a lower limit on the temperature of the gas. For a transition of natural linewidth \(\gamma\), this temperature limit is~\cite{lett1989}
-\[ T_D = \frac{h\gamma}{4\pi k_B} \]
+\begin{equation}
+    T_D = \frac{h\gamma}{4\pi k_B}
+\end{equation}
 \subsection{Hyperfine structure of rubidium-85}
 \subsubsection{Hyperfine splitting}
-The simplest atom, hydrogen, can be modelled as a solitary electric monopole -- the nucleus -- with an electron orbiting according to quantum or classical electrodynamics as required\footnote{That is to say, hydrogen-1 rather than deuterium or tritium.}. The same
+The simplest atom, hydrogen, can be modelled as a solitary electric monopole -- the nucleus -- with an electron orbiting a proton according to quantum or classical electrodynamics as required\footnote{That is to say, hydrogen-1 rather than deuterium or tritium.}. The same
 model is adequate for more complex atoms such as rubidium in some applications; this simple treatment produces discrete energy levels from straightforward quantum mechanics. If we use higher-order expansions
 of the electric and magnetic multipoles, these energy levels break down to reveal finer states~\cite{satspec}. We call this phenomenom ``hyperfine splitting''.
 \\\\
